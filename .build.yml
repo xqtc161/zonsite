@@ -12,11 +12,20 @@ submitter:
 sources:
   - https://git.sr.ht/~xqtc/zonsite
 
+secrets:
+  - 2e27eb3c-ee5e-40e4-a67d-f6c64b44a04f
+
 environment:
   NIX_CONFIG: experimental-features = nix-command flakes
   site: tila.cat
 
 tasks:
+  - mirror: |
+      cd zonsite
+      ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+      git remote add github git@github.com:xqtc161/zonsite.git
+      git push --force github HEAD:trunk
+
   - build: |
       cd zonsite
       nix run .#build
@@ -24,3 +33,4 @@ tasks:
 
   - upload: |
       nix run nixpkgs#hut -- pages publish -d $site ~/site.tar.gz
+
