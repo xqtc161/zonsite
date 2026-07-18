@@ -34,6 +34,11 @@
         },
     },
 
+    .webring = .{
+        .prev = "https://martini.moe",
+        .next = "https://juvi.likes.graphics/",
+    },
+
     .be_gay = "do crime",
 
     .site = .{
