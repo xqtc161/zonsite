@@ -16,28 +16,31 @@ fn render(w: *Writer, src: [:0]const u8) !void {
     try w.writeAll(html_head);
 
     var tok = std.zig.Tokenizer.init(src);
+    // where we stopped writing. allows to grab the gaps the tokenizer skips
     var index: usize = 0;
 
     while (true) {
         const t = tok.next();
+        // dump the whitespace/comments before this token as-is
         try writeEscaped(w, src[index..t.loc.start]);
+        index = t.loc.end;
         if (t.tag == .eof) break;
 
-        const text = src[t.loc.start..t.loc.end];
-        const class = classOf(t.tag);
-
-        if (t.tag == .string_literal) {
-            try writeString(w, text, class);
-        } else {
-            try w.print("<span class=\"{s}\">", .{class});
-            try writeEscaped(w, text);
-            try w.writeAll("</span>");
-        }
-
-        index = t.loc.end;
+        try writeToken(w, src[t.loc.start..t.loc.end], t.tag);
     }
 
     try w.writeAll(html_tail);
+}
+
+fn writeToken(w: *Writer, text: []const u8, tag: std.zig.Token.Tag) !void {
+    const class = classOf(tag);
+
+    // determine if string literal is a link or not
+    if (tag == .string_literal) return writeString(w, text, class);
+
+    try w.print("<span class=\"{s}\">", .{class});
+    try writeEscaped(w, text);
+    try w.writeAll("</span>");
 }
 
 fn classOf(tag: std.zig.Token.Tag) []const u8 {
@@ -70,6 +73,8 @@ fn linkKind(s: []const u8) LinkKind {
 fn writeString(w: *Writer, text: []const u8, class: []const u8) !void {
     try w.print("<span class=\"{s}\">", .{class});
 
+    // if string literal is a url or email wrap the contents in an <a> tag
+    // to make it clickable or otherwise break and render as plain text
     linkified: {
         if (text.len < 2 or text[0] != '"') break :linkified;
         const inner = text[1 .. text.len - 1]; //strip quotes
