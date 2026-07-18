@@ -23,22 +23,21 @@
             },
             .books = .{ // fold
                 .fiction = .{
-                    .{ .Dune, .DuneMessiah, .ChildrenOfDune }, // haven't read the rest yet :P
-                    .{ .Neuromancer, .CountZero, .MonaLisaOverdrive },
-                    .TheWindofVenusTheAeoliadPart1,
+                    .{ "Dune", "Dune Messiah", "Children of Dune" }, // haven't read the rest yet :P
+                    .{ "Neuromancer", "Count Zero", "Mona Lisa Overdrive" },
                 },
                 .nonfiction = .{
-                    .TheEgoAndItsOwn,
+                    "The Ego And It's Own",
                     .{
-                        .name = .Desert,
+                        .name = "Desert",
                         .url = "https://theanarchistlibrary.org/library/anonymous-desert",
                     },
                     .{
-                        .name = .BlessedIsTheFlame,
+                        .name = "Blessed is the Flame",
                         .url = "https://theanarchistlibrary.org/library/serafinski-blessed-is-the-flame",
                     },
                     .{
-                        .name = .Baedan,
+                        .name = "Baedan",
                         .url = "https://theanarchistlibrary.org/library/baedan-baedan",
                     },
                 },
@@ -81,5 +80,5 @@
         .zig_ver = "0.16.0",
     },
 
-    // "Once men turned their thinking over to machines in the hope that this would set them free. But that only permitted other men with machines to enslave them." - Paul Atreides
+    // "Once men turned their thinking over to machines in the hope that this would set them free. But that only permitted other men with machines to enslave them."
 }
