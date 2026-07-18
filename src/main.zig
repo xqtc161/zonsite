@@ -21,8 +21,7 @@ fn render(w: *Writer, src: [:0]const u8) !void {
     const folds = fold_buf[0..scanFolds(src, &fold_buf)];
 
     var tok = std.zig.Tokenizer.init(src);
-    var index: usize = 0; // end of what we've written, to recover skipped gaps
-    var fold_id: usize = 0; // unique id to pair each checkbox with its label
+    var index: usize = 0; // end of what weve written, to recover skipped gaps
 
     while (true) {
         const t = tok.next();
@@ -32,19 +31,22 @@ fn render(w: *Writer, src: [:0]const u8) !void {
         if (t.tag == .eof) break;
 
         const text = src[t.loc.start..t.loc.end];
+        // a braces byte offset doubles as its checkbox id, so the closing
+        // brace can reference the same toggle the opening one created
         switch (t.tag) {
             // fold open
-            // wraps block in a checkbox toggle (see openFold)
+            // wrap the block in a checkbox toggle (see openFold)
             .l_brace => if (foldOpen(folds, t.loc.start)) |n| {
-                try openFold(w, fold_id, n, text);
-                fold_id += 1;
+                try openFold(w, t.loc.start, n, text);
             } else try writeToken(w, text, t.tag),
             // fold close
-            // shut the wrapper before the brace so the } stays visible
-            .r_brace => {
-                if (foldClose(folds, t.loc.start)) try w.writeAll("</span></span>");
+            // close the body, then wrap } in a label too so the
+            // whole collapsed "{ n lines }" pill is clickable
+            .r_brace => if (foldClose(folds, t.loc.start)) |open| {
+                try w.print("</span><label class=\"fold-brace\" for=\"fold{d}\">", .{open});
                 try writeToken(w, text, t.tag);
-            },
+                try w.writeAll("</label></span>");
+            } else try writeToken(w, text, t.tag),
             else => try writeToken(w, text, t.tag),
         }
     }
@@ -64,17 +66,20 @@ fn foldOpen(folds: []const Fold, off: usize) ?usize {
     return null;
 }
 
-fn foldClose(folds: []const Fold, off: usize) bool {
-    for (folds) |f| if (f.close == off) return true;
-    return false;
+// returns the matching open-brace offset (checkbox id) if off closes a fold
+fn foldClose(folds: []const Fold, off: usize) ?usize {
+    for (folds) |f| if (f.close == off) return f.open;
+    return null;
 }
 
-// a hidden checkbox toggles the body, the brace is its label, the line count is
-// the collapsed hint. inline spans so it goes inside the <pre> (unlike <details>)
+// a hidden checkbox toggles the body
+// the { and the "n lines" hint share a label (and the } gets its own, see render)
+// so the whole fold hint is clickable.
+// inline spans so it goes inside the <pre> (unlike <details>)
 fn openFold(w: *Writer, id: usize, lines: usize, brace: []const u8) !void {
     try w.print("<span class=\"fold-block\"><input type=\"checkbox\" class=\"fold-toggle\" id=\"fold{d}\" checked><label class=\"fold-brace\" for=\"fold{d}\">", .{ id, id });
     try writeToken(w, brace, .l_brace);
-    try w.print("</label><span class=\"fold-hint\"> {d} lines </span><span class=\"fold-body\">", .{lines});
+    try w.print("<span class=\"fold-hint\"> {d} lines </span></label><span class=\"fold-body\">", .{lines});
 }
 
 // find every brace marked with a //fold comment; record its span and line count

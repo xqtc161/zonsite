@@ -47,14 +47,12 @@ pre code span[class^="tok-"]:hover {
 .tok-string a:hover { text-decoration: none; }
 
 /* code folding: a //fold comment wraps a block in a hidden checkbox toggle.
-   only inline elements, so it flows inside the <pre> (a <details> can't) */
+   only inline elements, so it gets inside the <pre> (a <details> can't) */
 .fold-toggle { display: none; } /* the checkbox itself is invisible */
 
-.fold-brace { cursor: pointer; } /* clicking the { toggles the fold */
+.fold-brace { cursor: pointer; } /* clicking any brace / hint toggles the fold */
 
 .fold-hint { display: none; color: var(--comment); }
+.fold-toggle:checked ~ .fold-brace .fold-hint { display: inline; }
 
-/* checked = collapsed: hide the body, reveal the "N lines" hint. the sibling
-   combinators stay scoped inside each .fold-block wrapper */
-.fold-toggle:checked ~ .fold-hint { display: inline; }
 .fold-toggle:checked ~ .fold-body { display: none; }
