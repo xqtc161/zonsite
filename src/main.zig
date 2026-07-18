@@ -98,6 +98,7 @@ fn writeEscaped(w: *Writer, s: []const u8) !void {
         '<' => try w.writeAll("&lt;"),
         '>' => try w.writeAll("&gt;"),
         '&' => try w.writeAll("&amp;"),
+        '\'' => try w.writeAll("&#39;"),
         else => try w.writeByte(c),
     };
 }
@@ -106,6 +107,7 @@ fn writeAttr(w: *Writer, s: []const u8) !void {
     for (s) |c| switch (c) {
         '&' => try w.writeAll("&amp;"),
         '"' => try w.writeAll("&quot;"),
+        '\'' => try w.writeAll("&#39;"),
         '<' => try w.writeAll("&lt;"),
         '>' => try w.writeAll("&gt;"),
         else => try w.writeByte(c),
