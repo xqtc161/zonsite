@@ -1,0 +1,47 @@
+:root {
+  --bg:       #0f1014;
+  --fg:       #c0caf5;
+  --string:   #9898a6;
+  --number:   #e9c46a;
+  --ident:    #9898a6;
+  --punct:    #8eb6f5;
+  --comment:  #808080;
+  --link:     #e5c890;
+}
+
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  padding: 2rem;
+  display: flex;
+  /* justify-content: center; */
+}
+
+pre {
+  margin: 0;
+  font-family: ui-monospace, monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--fg);
+  tab-size: 4;
+}
+
+.tok-string { color: var(--string); }
+.tok-number { color: var(--number); }
+.tok-ident { color: var(--ident); }
+.tok-punct { color: var(--punct); }
+.tok-comment { color: var(--comment); font-style: italic; }
+
+pre code span:hover {
+  background: rgba(245, 178, 39, 0.09);
+  border-radius: 3px;
+}
+
+.tok-string a {
+  color: var(--string);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.tok-string a:hover { text-decoration: none; }

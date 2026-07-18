@@ -1,0 +1,26 @@
+image: nixos/latest
+
+oauth: pages.sr.ht/PAGES:RW
+
+submitter:
+  git.sr.ht:
+    enabled: true
+    allow-refs:
+      - refs/heads/trunk
+      - "refs/tags/*"
+
+sources:
+  - https://git.sr.ht/~xqtc/zonsite
+
+environment:
+  NIX_CONFIG: experimental-features = nix-command flakes
+  site: tila.cat
+
+tasks:
+  - build: |
+      cd zonsite
+      nix run .#build
+      tar -czf ~/site.tar.gz -C zig-out .
+
+  - upload: |
+      nix run nixpkgs#hut -- pages publish -d $site ~/site.tar.gz

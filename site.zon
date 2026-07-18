@@ -1,0 +1,43 @@
+.{
+    // tila.cat
+    .tila = .{
+        .pronouns = "she/they",
+
+        .location = .{
+            .sometimes = "https://ha.si",
+            .always = "in ur walls",
+        },
+
+        .speaks = .{ .DE, .EN },
+    },
+
+    .links = .{
+        // code forges
+        .sourcehut = "https://sr.ht/~xqtc",
+        .codeberg = "https://codeberg.org/xqtc",
+        .github = "https://github.com/xqtc161", // yuck
+
+        // social
+        .fedi = "https://girldick.gay/tila",
+    },
+
+    .keys = .{
+        .ssh = .{
+            .{
+                .key = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAINIprSWFWih0JQaHCF4zlrURecjpDV5uRQeT7zbOaoKNAAAABHNzaDo=",
+                .fingerprint = "256 SHA256:KD89RqJZvQyJtAEgolIfnbCoFlhhjSLE3Z4A8VL4hgY (ED25519-SK)",
+            },
+            .{
+                .key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN7UkcmSVo+SeB5Obevz3mf3UHruYxn0UHUzoOs2gDBy",
+                .fingerprint = "256 SHA256:E9cz+ZufIQXc39Wrzq4kyLnz1aYGANTmn0WL+JRnCpw (ED25519)",
+            },
+        },
+    },
+
+    .be_gay = "do crime",
+
+    .site = .{
+        .source = "https://git.sr.ht/~xqtc/zonsite",
+        .zig_ver = "0.16.0",
+    },
+}
