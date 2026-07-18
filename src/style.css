@@ -33,7 +33,7 @@ pre {
 .tok-punct { color: var(--punct); }
 .tok-comment { color: var(--comment); font-style: italic; }
 
-pre code span:hover {
+pre code span[class^="tok-"]:hover {
   background: rgba(245, 178, 39, 0.09);
   border-radius: 3px;
 }
@@ -45,3 +45,16 @@ pre code span:hover {
 }
 
 .tok-string a:hover { text-decoration: none; }
+
+/* code folding: a //fold comment wraps a block in a hidden checkbox toggle.
+   only inline elements, so it flows inside the <pre> (a <details> can't) */
+.fold-toggle { display: none; } /* the checkbox itself is invisible */
+
+.fold-brace { cursor: pointer; } /* clicking the { toggles the fold */
+
+.fold-hint { display: none; color: var(--comment); }
+
+/* checked = collapsed: hide the body, reveal the "N lines" hint. the sibling
+   combinators stay scoped inside each .fold-block wrapper */
+.fold-toggle:checked ~ .fold-hint { display: inline; }
+.fold-toggle:checked ~ .fold-body { display: none; }
