@@ -10,23 +10,24 @@
 
         .speaks = .{ .DE, .EN },
 
+        .projects = .{
+            .kirikae = .{
+                .description = "A simple NixOS deployment tool",
+                .url = "https://git.sr.ht/~xqtc/kirikae",
+                .language = .zig,
+            },
+            .hako = .{
+                .description = "(WIP) A small multi call binary exposing several small tools",
+                .url = "https://git.sr.ht/~xqtc/hako",
+                .language = .zig,
+            },
+        },
+
         .likes = .{
             .tech = .{
                 .zig = "https://ziglang.org",
                 .nixos = "https://nixos.org",
                 .rust = "https://rust-lang.org",
-            },
-            .projects = .{
-                .kirikae = .{
-                    .description = "A simple NixOS deployment tool",
-                    .url = "https://git.sr.ht/~xqtc/kirikae",
-                    .language = .zig,
-                },
-                .hako = .{
-                    .description = "(WIP) A small multi call binary exposing several small tools",
-                    .url = "https://git.sr.ht/~xqtc/hako",
-                    .language = .zig,
-                },
             },
             .music = .{ // fold
                 .cissne = "https://https://cissnejapan.bandcamp.com/",
