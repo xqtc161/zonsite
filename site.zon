@@ -21,6 +21,11 @@
                 .url = "https://git.sr.ht/~xqtc/hako",
                 .language = .zig,
             },
+            .graphql = .{
+                .description = "A small GraphQL client library",
+                .url = "https://git.sr.ht/~xqtc/graphql-zig",
+                .language = .zig,
+            },
         },
 
         .likes = .{
