@@ -1,12 +1,12 @@
 :root {
-  --bg:       #0f1014;
-  --fg:       #c0caf5;
-  --string:   #9898a6;
-  --number:   #e9c46a;
-  --ident:    #9898a6;
-  --punct:    #8eb6f5;
-  --comment:  #808080;
-  --link:     #e5c890;
+  --bg:       #141515;
+  --fg:       #ffffff;
+  --string:   #ffa2ed;
+  --number:   #fff700;
+  --ident:    #fff700;
+  --punct:    #ddd0c4;
+  --comment:  #8a8a8a;
+  --link:     #ffa2ed;
 }
 
 html { background: var(--bg); }
